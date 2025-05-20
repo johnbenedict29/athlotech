@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHLOTECH - Cart</title>
+    <link rel="icon" type="image/png" href="images/others/transparent-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Urbanist", sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #F0F4FF;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+        
+        .nav a.active {
+            border-bottom: 2px solid white;
+        }
+        
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            width: 220px;
+            background-color: #1c4d72;
+            color: white;
+        }
+        
+        .cart-button {
+            background-color: #000;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .cart-button a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .main-content {
+            padding: 20px;
+            flex: 1 0 auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            flex-shrink: 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-style: italic;
+            font-weight: bolder;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            font-style: italic;
+        }
+
+        /* Cart specific styles */
+        .cart-container {
+            flex: 2;
+            padding: 20px;
+        }
+
+        .cart-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .select-all {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .select-all input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            border: 2px solid #003559;
+            border-radius: 10px;
+            padding: 15px;
+            align-items: center;
+            position: relative;
+        }
+
+        .item-checkbox {
+            margin-right: 15px;
+        }
+
+        .item-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .item-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border: 1px solid #eee;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 10px;
+        }
+
+        .item-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background-color: #b9d6f2;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .remove-item {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .payment-details {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            height: fit-content;
+            border: 2px solid #003559;
+        }
+
+        .payment-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #003559;
+        }
+
+        .form-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .checkout-btn {
+            background-color: #000;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #333;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .empty-cart h2 {
+            color: #003559;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .shop-now-btn {
+            background-color: #003559;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .modal-button {
+    background-color: #003559;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 20px auto 0; /* centers and adds spacing */
+}
+
+.modal-button:hover {
+    background-color: #1c4d72;
+}
+
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal {
+            background-color: #b9d6f2;
+            border-radius: 10px;
+            border: solid #003559 2.5px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 20px;
+            text-align: justify;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003559;
+            padding-bottom: 10px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .back-button {
+            background-color: #003559;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        
+        .modal-content {
+            color: #003559;
+            line-height: 1.6;
+        }
+        
+        .modal-content h3 {
+            margin: 15px 0 10px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 15px;
+        }
+        
+        .modal-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+
+        /* FAQ specific styles */
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 53, 89, 0.3);
+            padding-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #003559;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 20px;
+        }
+        
+        .faq-question.active:after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            padding: 10px 0;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .payment-details {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .item-image {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .remove-item {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+
+  .logo {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .user-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 90%;
+  }
+
+  .cart-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .user-icon {
+    align-self: center;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .main-content {
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  .cart-title {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .item-image {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .item-name {
+    font-size: 18px;
+  }
+
+  .quantity-input {
+    width: 50px;
+  }
+
+  .payment-details {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cart-title {
+    font-size: 24px;
+  }
+
+  .item-price,
+  .form-label {
+    font-size: 16px;
+  }
+
+  .form-input,
+  .form-select {
+    font-size: 14px;
+  }
+
+  .summary-total {
+    font-size: 16px;
+  }
+
+  .modal {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-content {
+    font-size: 14px;
+  }
+
+  .faq-question {
+    font-size: 16px;
+  }
+
+  .faq-answer {
+    font-size: 14px;
+  }
+}
+
+/* Navigation link hover */
+.nav a:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.header, .footer {
+    background: linear-gradient(-45deg, #003559, #1c4d72, #003559, #1c4d72, #003559);
+    background-size: 400% 400%;
+    animation: moveBackground 4s ease infinite;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+    </style>
+
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <svg class="logo-icon" viewBox="0 0 50 50">
+                    <image href="images/others/transparent-logo.png" width="50" height="50"/>
+                </svg>
+            </a>
+            <span class="logo-text">ATHLOTECH</span>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html">HOME</a>
+            <a href="shop.html">SHOP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+        
+        <div class="user-controls">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search...">
+                <span class="search-icon"></span>
+            </div>
+            
+            <div class="cart-button">
+                <a href="cart.html" class="active">🛒 CART</a>
+            </div>
+            
+            <div class="user-icon">
+                <a href="profile.html">
+                <svg class="logo-icon" viewBox="0 0 40 40">
+                    <image href="images/others/transparent-profile.png" width="40" height="40"/>
+                </svg>
+            </a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="cart-container">
+            <div class="cart-title">
+                <span>CART</span>
+                <div class="select-all">
+                    <span>Select All Items</span>
+                    <input type="checkbox" id="selectAll">
+                </div>
+            </div>
+            
+            <div class="cart-items" id="cartItemsContainer">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="payment-details">
+            <div class="payment-title">PAYMENT DETAILS</div>
+            
+            <div class="payment-form">
+                <div class="form-group">
+                    <div class="form-label">ADDRESS</div>
+                    <input type="text" class="form-input" id="address" placeholder="Enter Address">
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">MODE OF PAYMENT</div>
+                    <select class="form-select" id="paymentMode">
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-label">VOUCHER</div>
+                    <input type="text" class="form-input" id="voucher" placeholder="Enter Voucher Code">
+                </div>
+                
+                <div class="summary" id="orderSummary">
+                    <!-- Order summary will be populated by JavaScript -->
+                </div>
+                
+                <button class="checkout-btn" id="checkoutBtn">CHECKOUT</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" id="terms-link">Terms & Conditions</a>
+            <a href="#" id="return-link">Return Policy</a>
+            <a href="#" id="faq-link">Frequently Asked Questions (FAQs)</a>
+        </div>
+        
+        <div class="copyright">
+            © 2025 ATHLOTECH. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Modal structures -->
+    <div class="modal-overlay" id="terms-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">TERMS & CONDITIONS</div>
+            </div>
+            <div class="modal-content">
+                <p>Welcome to Athlotech! These Terms and Conditions outline the rules and regulations for the use of our website and services. By accessing or using our site, you agree to comply with and be bound by the following terms. If you disagree with any part of these terms, please do not use our website.</p>
+                
+                <h3>Product Information</h3>
+                <p>We offer a wide range of sports gear, apparel, and equipment. All descriptions, images, and prices are subject to change without notice. We make every effort to ensure product accuracy, but we do not guarantee that all information is current or error-free.</p>
+                
+                <h3>Order Processing & Shipping</h3>
+                <p>We aim to process and ship orders promptly. Delivery times are estimates and may vary depending on your location and carrier delays. We are not responsible for late or lost shipments once handed over to the courier.</p>
+                
+                <h3>User Accounts</h3>
+                <p>When you create an account with us, you must provide accurate and complete information. You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+                
+                <h3>Payment Terms</h3>
+                <p>All payments are processed securely. We accept major credit cards, digital wallets, and other payment methods as indicated at checkout. Prices are inclusive of applicable taxes unless stated otherwise.</p>
+                
+                <h3>Privacy Policy</h3>
+                <p>Your use of our website is also governed by our Privacy Policy, which outlines how we collect, use, and protect your personal information.</p>
+                
+                <h3>Limitation of Liability</h3>
+                <p>Athlotech shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services or for the cost of procurement of substitute goods and services.</p>
+                
+                <h3>Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website. Your continued use of the site after changes constitutes acceptance of the modified terms.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="return-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">RETURN POLICY</div>
+            </div>
+            <div class="modal-content">
+                <p>To be eligible for a return, your item must meet the following conditions:</p>
+                
+                <ul>
+                    <li>Returned within 3-5 days of delivery.</li>
+                    <li>Unused, unwashed, and in original condition—the item must be in the same state you received it in, with all tags and original packaging.</li>
+                    <li>Non-sale items only—items purchased on sale, clearance, or through special promotions are not eligible for return unless defective or damaged.</li>
+                </ul>
+                
+                <h3>Return Process</h3>
+                <p>To initiate a return, please contact our customer service team through the Contact Us page or by emailing returns@athlotech.com. You will receive instructions on how to package and ship your return.</p>
+                
+                <h3>Refund Processing</h3>
+                <p>Once your return is received and inspected, we will notify you of the approval or rejection of your refund. If approved, your refund will be processed and a credit will automatically be applied to your original method of payment within 5-7 business days.</p>
+                
+                <h3>Exchanges</h3>
+                <p>We do not process direct exchanges. If you wish to exchange an item, please return the original purchase for a refund and place a new order for your desired item.</p>
+                
+                <h3>Damaged or Defective Items</h3>
+                <p>If you receive a damaged or defective item, please contact us immediately with photos of the damage. We will work with you to resolve the issue promptly, either through replacement or refund.</p>
+                
+                <h3>Return Shipping Costs</h3>
+                <p>Customers are responsible for return shipping costs unless the item received was defective or the wrong item was shipped. In these cases, we will provide a prepaid shipping label.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="faq-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">FREQUENTLY ASKED QUESTIONS</div>
+            </div>
+            <div class="modal-content">
+                <div class="faq-item">
+                    <div class="faq-question">What types of sports equipment do you sell?</div>
+                    <div class="faq-answer">
+                        We offer a wide range of athletic gear and equipment including fitness equipment, team sports supplies, outdoor adventure gear, activewear, footwear, and accessories. Our inventory spans across popular sports like basketball, football, soccer, volleyball, tennis, running, yoga, and many more.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I track my order?</div>
+                    <div class="faq-answer">
+                        Once your order has shipped, you will receive an email with a tracking number and a link to track your package. You can also log in to your account on our website to view your order status.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer international shipping?</div>
+                    <div class="faq-answer">
+                        Yes, we ship to most countries worldwide. International shipping rates and delivery times vary depending on the destination. Please note that additional customs fees, taxes, and duties may apply for international orders, which are the responsibility of the customer.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What if I receive a damaged or defective item?</div>
+                    <div class="faq-answer">
+                        If you receive a damaged or defective item, please contact our customer service team within 48 hours of delivery. Include photos of the damage and your order number. We'll work with you to resolve the issue by providing a replacement or refund as appropriate.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long will it take to receive my order?</div>
+                    <div class="faq-answer">
+                        Domestic orders typically arrive within 3-5 business days. Express shipping options are available at checkout for faster delivery. International orders generally take 7-14 business days, depending on the destination country and customs processing times.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you have physical stores?</div>
+                    <div class="faq-answer">
+                        Currently, we operate exclusively online. This allows us to offer competitive pricing and ship directly to customers nationwide and internationally.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are your products authentic/genuine?</div>
+                    <div class="faq-answer">
+                        Yes, we only sell 100% authentic products sourced directly from manufacturers or authorized distributors. We stand behind the authenticity and quality of every item we sell.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Success Modal -->
+    <div class="modal-overlay" id="checkout-success-modal">
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-title">ITEMS CHECKED OUT. THANK YOU!</div>
+                <p style="text-align: center;">Your order has been successfully placed.<br>
+                You'll receive a confirmation email shortly with all the details.</p>
+                <button class="modal-button" id="continueShoppingBtn">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartItems();
+            setupEventListeners();
+            setupModals();
+        });
+
+        // Load cart items from local storage
+        function loadCartItems() {
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    cartItemsContainer.innerHTML = ''; // Clear container first
+    
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="shop.html" class="shop-now-btn">Shop Now</a>
+            </div>
+        `;
+        updateOrderSummary([]);
+        return;
+    }
+    
+    // Rebuild cart items
+    cartItems.forEach(item => {
+        item.selected = item.selected === true;
+
+        const cartItemElement = document.createElement('div');
+        cartItemElement.classList.add('cart-item');
+        cartItemElement.dataset.id = item.id;
+        
+        cartItemElement.innerHTML = `
+            <div class="item-checkbox">
+                <input type="checkbox" class="item-select" data-id="${item.id}" ${item.selected ? 'checked' : ''}>
+            </div>
+            <img src="${item.image}" alt="${item.name}" class="item-image">
+            <div class="item-details">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">₱${item.price.toFixed(2)}</div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                    <input type="number" class="quantity-input" value="${item.quantity}" min="0" data-id="${item.id}">
+                    <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                </div>
+            </div>
+            <button class="remove-item" data-id="${item.id}">✖</button>
+        `;
+        
+        cartItemsContainer.appendChild(cartItemElement);
+    });
+    
+    updateOrderSummary(cartItems);
+}
+
+        // Update the order summary section
+        function updateOrderSummary(cartItems) {
+            const orderSummary = document.getElementById('orderSummary');
+            const selectedItems = cartItems.filter(item => item.selected !== false);
+            
+            // Calculate subtotal
+            let subtotal = 0;
+            selectedItems.forEach(item => {
+                subtotal += item.price * (item.quantity || 1);
+            });
+            
+            // Calculate shipping based on subtotal
+            let shipping = subtotal > 0 ? 48 : 0;
+            
+            // Apply discount (if applicable)
+            const voucher = document.getElementById('voucher').value;
+            let discount = 0;
+            if (voucher && voucher.toUpperCase() === 'FIRST10') {
+                discount = 30;
+            }
+            
+            // Calculate grand total
+            const grandTotal = subtotal + shipping - discount;
+            
+            // Update summary HTML
+            orderSummary.innerHTML = `
+                <div class="summary-item">
+                    <span>SUBTOTAL</span>
+                    <span>₱${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>SHIPPING SUBTOTAL</span>
+                    <span>₱${shipping.toFixed(2)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>DISCOUNT</span>
+                    <span>- ₱${discount.toFixed(2)}</span>
+                </div>
+                <div class="summary-total">
+                    <span>GRAND TOTAL</span>
+                    <span>₱${grandTotal.toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Enable/disable checkout button based on cart status
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.disabled = subtotal === 0;
+            if (subtotal === 0) {
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.style.cursor = 'not-allowed';
+            } else {
+                checkoutBtn.style.opacity = '1';
+                checkoutBtn.style.cursor = 'pointer';
+            }
+        }
+
+        // Setup all event listeners
+function setupEventListeners() {
+    // Select all items checkbox
+    const selectAllCheckbox = document.getElementById('selectAll');
+    selectAllCheckbox.addEventListener('change', function() {
+        const isChecked = this.checked;
+        const itemCheckboxes = document.querySelectorAll('.item-select');
+        
+        itemCheckboxes.forEach(checkbox => {
+    checkbox.checked = isChecked;
+    const id = checkbox.dataset.id;
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const index = cartItems.findIndex(item => item.id == id);
+    if (index !== -1) {
+        cartItems[index].selected = isChecked;
+    }
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+});
+updateOrderSummary(JSON.parse(localStorage.getItem('cartItems')) || []);
+
+    });
+    
+    // Item quantity controls
+    document.addEventListener('click', function(e) {
+    // Decrease quantity handler
+    if (e.target.classList.contains('decrease')) {
+        const id = e.target.dataset.id;
+        const input = document.querySelector(`.quantity-input[data-id="${id}"]`);
+        let value = parseInt(input.value) || 0;
+        
+        if (value > 0) {
+            value--;
+            input.value = value;
+            
+            if (value === 0) {
+                removeCartItem(id);
+            } else {
+                updateCartItemQuantity(id, value);
+            }
+        }
+    }
+    
+    // Increase quantity handler
+    if (e.target.classList.contains('increase')) {
+        const id = e.target.dataset.id;
+        const quantityInput = document.querySelector(`.quantity-input[data-id="${id}"]`);
+        let currentValue = parseInt(quantityInput.value) || 0;
+        currentValue++;
+        quantityInput.value = currentValue;
+        updateCartItemQuantity(id, currentValue);
+    }
+    
+    // Remove item handler
+    if (e.target.classList.contains('remove-item')) {
+        const id = e.target.dataset.id;
+        removeCartItem(id);
+    }
+});
+
+// Quantity input change handler - FIXED VERSION
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('quantity-input')) {
+        const id = e.target.dataset.id;
+        let value = parseInt(e.target.value) || 0;
+        
+        // Force valid number
+        e.target.value = value < 0 ? 0 : value;
+        
+        if (value <= 0) {
+            removeCartItem(id);
+        } else {
+            updateCartItemQuantity(id, value);
+        }
+    }
+});
+    
+// When an individual checkbox is clicked
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('item-select')) {
+        updateItemSelection();
+    }
+});
+
+    // Voucher input change
+    document.getElementById('voucher').addEventListener('input', function() {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        updateOrderSummary(cartItems);
+    });
+    
+    // Checkout button
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+        handleCheckout();
+    });
+    
+    // Continue shopping button in checkout success modal
+    document.getElementById('continueShoppingBtn').addEventListener('click', function() {
+        document.getElementById('checkout-success-modal').style.display = 'none';
+        window.location.href = 'shop.html';
+    });
+}
+
+// Function to remove an item from the cart
+function removeCartItem(id) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const newCart = cartItems.filter(item => item.id != id);
+    localStorage.setItem('cartItems', JSON.stringify(newCart));
+    loadCartItems(); // Refresh the display
+}
+
+// Function to update cart item quantity
+function updateCartItemQuantity(id, quantity) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const index = cartItems.findIndex(item => item.id == id);
+    
+    if (index > -1) {
+        cartItems[index].quantity = quantity;
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateOrderSummary(cartItems);
+    }
+}
+
+// Function to update item selection status
+function updateItemSelection() {
+    // Get current cart items
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    // Update selection status for each item
+    document.querySelectorAll('.item-select').forEach(checkbox => {
+        const id = checkbox.dataset.id;
+        const itemIndex = cartItems.findIndex(item => item.id == id);
+        
+        if (itemIndex !== -1) {
+            cartItems[itemIndex].selected = checkbox.checked;
+        }
+    });
+    
+    // Update local storage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Update order summary
+    updateOrderSummary(cartItems);
+    
+    // Update "Select All" checkbox state
+    updateSelectAllCheckbox();
+}
+
+// Function to update "Select All" checkbox state
+function updateSelectAllCheckbox() {
+    const checkboxes = document.querySelectorAll('.item-select');
+    const selectAllCheckbox = document.getElementById('selectAll');
+    
+    if (checkboxes.length === 0) {
+        selectAllCheckbox.checked = false;
+        return;
+    }
+    
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+    selectAllCheckbox.checked = allChecked;
+}
+
+// Function to handle checkout
+function handleCheckout() {
+    const address = document.getElementById('address').value;
+
+    if (!address) {
+        alert('Please enter your address to continue.');
+        return;
+    }
+
+    // Get selected items
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const selectedItems = cartItems.filter(item => item.selected === true);
+
+    if (selectedItems.length === 0) {
+        alert('Please select at least one item to checkout.');
+        return;
+    }
+
+    // Move selected items to To Review orders
+    const toReviewOrders = JSON.parse(localStorage.getItem('toReviewOrders')) || [];
+
+    selectedItems.forEach(item => {
+        toReviewOrders.push({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            reviewed: false,
+            rating: 0,
+            comment: ""
+        });
+    });
+
+    localStorage.setItem('toReviewOrders', JSON.stringify(toReviewOrders));
+
+    // Remove selected items from cart
+    const remainingCartItems = cartItems.filter(item => item.selected === false);
+    localStorage.setItem('cartItems', JSON.stringify(remainingCartItems));
+
+    // Show checkout success modal
+    document.getElementById('checkout-success-modal').style.display = 'flex';
+}
+
+
+// Function to update cart count in header (if needed)
+function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const cartCountElement = document.querySelector('.cart-count');
+    
+    if (cartCountElement) {
+        cartCountElement.textContent = cartItems.length;
+    }
+}
+
+// Setup modals
+function setupModals() {
+    // Terms modal
+    document.getElementById('terms-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('terms-modal').style.display = 'flex';
+    });
+    
+    // Return policy modal
+    document.getElementById('return-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('return-modal').style.display = 'flex';
+    });
+    
+    // FAQ modal
+    document.getElementById('faq-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('faq-modal').style.display = 'flex';
+    });
+    
+    // Back buttons in modals
+    document.querySelectorAll('.back-button').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal-overlay').style.display = 'none';
+        });
+    });
+    
+    // FAQ questions toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const answer = this.nextElementSibling;
+            answer.classList.toggle('show');
+        });
+    });
+    
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    });
+}
+</script>
+</body>
+</html>

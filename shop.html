@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHLOTECH - Shop</title>
+    <link rel="icon" type="image/png" href="images/others/transparent-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Urbanist", sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #F0F4FF;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .window-controls {
+            background-color: #f0f0f0;
+            padding: 8px;
+            text-align: right;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .control {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #999;
+            margin-left: 5px;
+            text-align: center;
+            line-height: 14px;
+            cursor: pointer;
+        }
+        
+        .header {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+        
+        .nav a.active {
+            border-bottom: 2px solid white;
+        }
+        
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            width: 220px;
+            background-color: #1c4d72;
+            color: white;
+        }
+        
+        .cart-button {
+            background-color: #000;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .cart-button a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex: 1 0 auto;
+        }
+        
+        .category-nav {
+            display: flex;
+            width: 100%;
+            border: 1.2px solid #000;
+            margin-bottom: 30px;
+        }
+        
+        .category-nav button {
+            flex: 1;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 0.3s;
+            border: 1px solid #000;
+        }
+
+        .category-nav button:hover {
+            border: 2px solid #000;
+            transform: scale(1.1);
+        }
+        
+        .category-nav button.active {
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .product-card {
+            background-color: white;
+            border: 2px solid #003559;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #003559;
+            margin-right: 10px;
+        }
+        
+        .product-rating {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .price-rating {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        
+        .product-name {
+            font-size: 16px;
+            color: #003559;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            flex-shrink: 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-style: italic;
+            font-weight: bolder;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            font-style: italic;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal {
+            background-color: #b9d6f2;
+            border-radius: 10px;
+            border: solid #003559 2.5px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 20px;
+            text-align: justify;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003559;
+            padding-bottom: 10px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .back-button {
+            background-color: #003559;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        
+        .modal-content {
+            color: #003559;
+            line-height: 1.6;
+        }
+        
+        .modal-content h3 {
+            margin: 15px 0 10px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 15px;
+        }
+        
+        .modal-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+
+        /* FAQ specific styles */
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 53, 89, 0.3);
+            padding-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #003559;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 20px;
+        }
+        
+        .faq-question.active:after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            padding: 10px 0;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1100px) {
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-nav {
+                flex-wrap: wrap;
+            }
+            
+            .category-nav button {
+                flex-basis: 33.33%;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-nav button {
+                flex-basis: 50%;
+            }
+        }
+
+        @media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+
+  .logo {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .user-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 90%;
+  }
+
+  .cart-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .user-icon {
+    align-self: center;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .category-nav button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .product-price {
+    font-size: 16px;
+  }
+
+  .product-rating {
+    font-size: 14px;
+  }
+
+  .product-name {
+    font-size: 14px;
+  }
+
+  .modal {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-content {
+    font-size: 14px;
+  }
+
+  .modal-content p,
+  .modal-content li {
+    line-height: 1.5;
+  }
+}
+
+/* Navigation link hover */
+.nav a:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.header, .footer {
+    background: linear-gradient(-45deg, #003559, #1c4d72, #003559, #1c4d72, #003559);
+    background-size: 400% 400%;
+    animation: moveBackground 4s ease infinite;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+    </style>
+
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <svg class="logo-icon" viewBox="0 0 50 50">
+                    <image href="images/others/transparent-logo.png" width="50" height="50"/>
+                </svg>
+            </a>
+            <span class="logo-text">ATHLOTECH</span>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html">HOME</a>
+            <a href="#" class="active">SHOP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+        
+        <div class="user-controls">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search...">
+                <span class="search-icon"></span>
+            </div>
+            
+            <div class="cart-button">
+                <a href="cart.html">🛒 CART</a>
+            </div>
+            
+            <div class="user-icon">
+                <a href="profile.html">
+                <svg class="logo-icon" viewBox="0 0 40 40">
+                    <image href="images/others/transparent-profile.png" width="40" height="40"/>
+                </svg>
+            </a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="category-nav" id="categoryNav">
+            <!-- Categories will be populated by JavaScript -->
+        </div>
+        
+        <div class="product-grid" id="productGrid">
+            <!-- Products will be populated by JavaScript -->
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" id="terms-link">Terms & Conditions</a>
+            <a href="#" id="return-link">Return Policy</a>
+            <a href="#" id="faq-link">Frequently Asked Questions (FAQs)</a>
+        </div>
+        
+        <div class="copyright">
+            © 2025 ATHLOTECH. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Modal structures -->
+    <div class="modal-overlay" id="terms-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">TERMS & CONDITIONS</div>
+            </div>
+            <div class="modal-content">
+                <p>Welcome to Athlotech! These Terms and Conditions outline the rules and regulations for the use of our website and services. By accessing or using our site, you agree to comply with and be bound by the following terms. If you disagree with any part of these terms, please do not use our website.</p>
+                
+                <h3>Product Information</h3>
+                <p>We offer a wide range of sports gear, apparel, and equipment. All descriptions, images, and prices are subject to change without notice. We make every effort to ensure product accuracy, but we do not guarantee that all information is current or error-free.</p>
+                
+                <h3>Order Processing & Shipping</h3>
+                <p>We aim to process and ship orders promptly. Delivery times are estimates and may vary depending on your location and carrier delays. We are not responsible for late or lost shipments once handed over to the courier.</p>
+                
+                <h3>User Accounts</h3>
+                <p>When you create an account with us, you must provide accurate and complete information. You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+                
+                <h3>Payment Terms</h3>
+                <p>All payments are processed securely. We accept major credit cards, digital wallets, and other payment methods as indicated at checkout. Prices are inclusive of applicable taxes unless stated otherwise.</p>
+                
+                <h3>Privacy Policy</h3>
+                <p>Your use of our website is also governed by our Privacy Policy, which outlines how we collect, use, and protect your personal information.</p>
+                
+                <h3>Limitation of Liability</h3>
+                <p>Athlotech shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services or for the cost of procurement of substitute goods and services.</p>
+                
+                <h3>Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website. Your continued use of the site after changes constitutes acceptance of the modified terms.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="return-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">RETURN POLICY</div>
+            </div>
+            <div class="modal-content">
+                <p>To be eligible for a return, your item must meet the following conditions:</p>
+                
+                <ul>
+                    <li>Returned within 3-5 days of delivery.</li>
+                    <li>Unused, unwashed, and in original condition—the item must be in the same state you received it in, with all tags and original packaging.</li>
+                    <li>Non-sale items only—items purchased on sale, clearance, or through special promotions are not eligible for return unless defective or damaged.</li>
+                </ul>
+                
+                <h3>Return Process</h3>
+                <p>To initiate a return, please contact our customer service team through the Contact Us page or by emailing returns@athlotech.com. You will receive instructions on how to package and ship your return.</p>
+                
+                <h3>Refund Processing</h3>
+                <p>Once your return is received and inspected, we will notify you of the approval or rejection of your refund. If approved, your refund will be processed and a credit will automatically be applied to your original method of payment within 5-7 business days.</p>
+                
+                <h3>Exchanges</h3>
+                <p>We do not process direct exchanges. If you wish to exchange an item, please return the original purchase for a refund and place a new order for your desired item.</p>
+                
+                <h3>Damaged or Defective Items</h3>
+                <p>If you receive a damaged or defective item, please contact us immediately with photos of the damage. We will work with you to resolve the issue promptly, either through replacement or refund.</p>
+                
+                <h3>Return Shipping Costs</h3>
+                <p>Customers are responsible for return shipping costs unless the item received was defective or the wrong item was shipped. In these cases, we will provide a prepaid shipping label.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="faq-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">FREQUENTLY ASKED QUESTIONS</div>
+            </div>
+            <div class="modal-content">
+                <div class="faq-item">
+                    <div class="faq-question">What types of sports equipment do you sell?</div>
+                    <div class="faq-answer">
+                        We offer a wide range of athletic gear and equipment including fitness equipment, team sports supplies, outdoor adventure gear, activewear, footwear, and accessories. Our inventory spans across popular sports like basketball, football, soccer, volleyball, tennis, running, yoga, and many more.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I track my order?</div>
+                    <div class="faq-answer">
+                        Once your order has shipped, you will receive an email with a tracking number and a link to track your package. You can also log in to your account on our website to view your order status.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer international shipping?</div>
+                    <div class="faq-answer">
+                        Yes, we ship to most countries worldwide. International shipping rates and delivery times vary depending on the destination. Please note that additional customs fees, taxes, and duties may apply for international orders, which are the responsibility of the customer.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What if I receive a damaged or defective item?</div>
+                    <div class="faq-answer">
+                        If you receive a damaged or defective item, please contact our customer service team within 48 hours of delivery. Include photos of the damage and your order number. We'll work with you to resolve the issue by providing a replacement or refund as appropriate.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long will it take to receive my order?</div>
+                    <div class="faq-answer">
+                        Domestic orders typically arrive within 3-5 business days. Express shipping options are available at checkout for faster delivery. International orders generally take 7-14 business days, depending on the destination country and customs processing times.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you have physical stores?</div>
+                    <div class="faq-answer">
+                        Currently, we operate exclusively online. This allows us to offer competitive pricing and ship directly to customers nationwide and internationally.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are your products authentic/genuine?</div>
+                    <div class="faq-answer">
+                        Yes, we only sell 100% authentic products sourced directly from manufacturers or authorized distributors. We stand behind the authenticity and quality of every item we sell.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        
+        // Modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modals = {
+                terms: document.getElementById('terms-modal'),
+                return: document.getElementById('return-modal'),
+                faq: document.getElementById('faq-modal')
+            };
+            
+            // Open modals
+            document.getElementById('terms-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                modals.terms.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+            });
+            
+            document.getElementById('return-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                modals.return.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            document.getElementById('faq-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                modals.faq.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Close modals with back buttons
+            const backButtons = document.querySelectorAll('.back-button');
+            backButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal-overlay');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                });
+            });
+            
+            // Close modals when clicking outside
+            const modalOverlays = document.querySelectorAll('.modal-overlay');
+            modalOverlays.forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // FAQ accordion functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    // Toggle active class
+                    this.classList.toggle('active');
+                    
+                    // Toggle visibility of answer
+                    const answer = this.nextElementSibling;
+                    answer.classList.toggle('show');
+                });
+            });
+        });
+        // Product data organized by categories
+        // Replace the original products object with this
+const products = {
+    "MEN": [
+        { id: 1, name: "Shades", price: 799, rating: 4.8, image: "images/men_products/1.png" },
+        { id: 2, name: "Men's Short", price: 599, rating: 4.9, image: "images/men_products/2.png" },
+        { id: 3, name: "Ironman Classic Watch", price: 5495, rating: 5.0, image: "images/men_products/3.png" },
+        { id: 4, name: "Men's Lightweight Boxer", price: 590, rating: 4.9, image: "images/men_products/4.png" },
+        { id: 5, name: "Duffel Bag", price: 1800, rating: 5.0, image: "images/men_products/5.png" },
+        { id: 6, name: "Nivea Men Deep Clean 3-in-1", price: 781, rating: 4.9, image: "images/men_products/6.png" },
+        { id: 7, name: "Men's Army Sport Fragrance", price: 1775, rating: 4.7, image: "images/men_products/7.png" },
+        { id: 8, name: "Quick Drying Towel", price: 1800, rating: 4.7, image: "images/men_products/8.png" },
+        { id: 9, name: "3-Stripes Sports Jacket", price: 899, rating: 5.0, image: "images/men_products/9.png" },
+        { id: 10, name: "Adizero Takumi Sen 10 Shoes", price: 9500, rating: 5.0, image: "images/men_products/10.png" },
+        { id: 11, name: "Training Shorts", price: 349, rating: 4.9, image: "images/men_products/11.png" },
+        { id: 12, name: "Performance T-Shirt", price: 2000, rating: 4.9, image: "images/men_products/12.png" },
+        { id: 13, name: "Road Bike Helmet", price: 1299, rating: 5.0, image: "images/men_products/13.png" },
+        { id: 14, name: "Ab Roller Wheel", price: 299, rating: 4.3, image: "images/men_products/14.png" },
+        { id: 15, name: "Basketball", price: 249, rating: 4.0, image: "images/men_products/15.png" }
+    ],
+    "WOMEN": [
+        { id: 16, name: "High Impact Sports Bra", price: 799, rating: 4.7, image: "images/women_products/16.png" },
+        { id: 17, name: "Moisture-Wicking Leggings", price: 599, rating: 4.6, image: "images/women_products/17.png" },
+        { id: 18, name: "Running Shorts", price: 399, rating: 4.5, image: "images/women_products/18.png" },
+        { id: 19, name: "Performance T-Shirt", price: 349, rating: 4.4, image: "images/women_products/19.png" },
+        { id: 20, name: "Yoga Pants", price: 649, rating: 4.8, image: "images/women_products/20.png" },
+        { id: 21, name: "Workout Jacket", price: 899, rating: 4.6, image: "images/women_products/21.png" },
+        { id: 22, name: "Swimsuit", price: 1299, rating: 4.5, image: "images/women_products/22.png" },
+        { id: 23, name: "Cycling Jersey", price: 699, rating: 4.3, image: "images/women_products/23.png" },
+        { id: 24, name: "Padded Cycling Shorts", price: 749, rating: 4.4, image: "images/women_products/24.png" },
+        { id: 25, name: "Running Shoes", price: 2999, rating: 4.7, image: "images/women_products/25.png" },
+        { id: 26, name: "Foam Roller", price: 799, rating: 4.5, image: "images/women_products/26.png" },
+        { id: 27, name: "Non-slip Yoga Mat", price: 999, rating: 4.7, image: "images/women_products/27.png" },
+        { id: 28, name: "Workout Tank Top", price: 699, rating: 4.4, image: "images/women_products/28.png" },
+        { id: 29, name: "Women's Socks", price: 129, rating: 4.7, image: "images/women_products/29.png" },
+        { id: 30, name: "Insulated Water Bottle", price: 499, rating: 4.4, image: "images/women_products/30.png" }
+    ],
+    "KIDS & BABIES": [
+        { id: 31, name: "Ergonomic Baby Carrier", price: 2800, rating: 4.9, image: "images/kids_products/31.png" },
+        { id: 32, name: "Activity Gym Play", price: 1500, rating: 4.7, image: "images/kids_products/32.png" },
+        { id: 33, name: "Soft Play Balls", price: 550, rating: 4.8, image: "images/kids_products/33.png" },
+        { id: 34, name: "Gentle Rocking Baby Bouncer", price: 1200, rating: 4.6, image: "images/kids_products/34.png" },
+        { id: 35, name: "Infant Safe Water Floataion Vest", price: 900, rating: 4.5, image: "images/kids_products/35.png" },
+        { id: 36, name: "Wide Baby Sun Hat", price: 400, rating: 4.9, image: "images/kids_products/36.png" },
+        { id: 37, name: "Baby Crawling Knee Pads", price: 300, rating: 4.7, image: "images/kids_products/37.png" },
+        { id: 38, name: "Doorway Pull-Up Bar Toys", price: 700, rating: 4.6, image: "images/kids_products/38.png" },
+        { id: 39, name: "Soft Building Blocks", price: 600, rating: 4.8, image: "images/kids_products/39.png" },
+        { id: 40, name: "Sensory Balls", price: 450, rating: 4.9, image: "images/kids_products/40.png" },
+        { id: 41, name: "Lightweight Balance Bike", price: 1800, rating: 4.7, image: "images/kids_products/41.png" },
+        { id: 42, name: "Kids' Scooter", price: 1500, rating: 4.6, image: "images/kids_products/42.png" },
+        { id: 43, name: "Mini Basketball Set", price: 1100, rating: 4.5, image: "images/kids_products/43.png" },
+        { id: 44, name: "Gardening Tool Set", price: 750, rating: 4.8, image: "images/kids_products/44.png" },
+        { id: 45, name: "Soft Flying Disc", price: 350, rating: 4.9, image: "images/kids_products/45.png" }
+    ],
+    "TRAVEL": [
+        { id: 46, name: "Portable Luggage Scale", price: 550, rating: 4.6, image: "images/travel_products/46.png" },
+        { id: 47, name: "Travel Adapter", price: 1200, rating: 4.7, image: "images/travel_products/47.png" },
+        { id: 48, name: "Compression Packing Cubes", price: 1100, rating: 4.8, image: "images/travel_products/48.png" },
+        { id: 49, name: "Travel Pillow", price: 800, rating: 4.9, image: "images/travel_products/49.png" },
+        { id: 50, name: "Portable First Aid Kit", price: 700, rating: 4.7, image: "images/travel_products/50.png" },
+        { id: 51, name: "Reusable Water Bottle", price: 750, rating: 4.9, image: "images/travel_products/51.png" },
+        { id: 52, name: "Travel Towel", price: 950, rating: 4.8, image: "images/travel_products/52.png" },
+        { id: 53, name: "Insect Repellent", price: 350, rating: 4.7, image: "images/travel_products/53.png" },
+        { id: 54, name: "Travel Binoculars", price: 2200, rating: 4.7, image: "images/travel_products/54.png" },
+        { id: 55, name: "Portable Camping Chair", price: 2999, rating: 4.7, image: "images/travel_products/55.jfif" },
+        { id: 56, name: "Travel Blanket", price: 900, rating: 4.8, image: "images/travel_products/56.png" },
+        { id: 57, name: "Headlamp", price: 1100, rating: 4.9, image: "images/travel_products/57.png" },
+        { id: 58, name: "Small Insulated Cooler Bag", price: 950, rating: 4.8, image: "images/travel_products/58.png" },
+        { id: 59, name: "Portable Hammock", price: 1600, rating: 4.9, image: "images/travel_products/59.png" },
+        { id: 60, name: "Travel Wash Bag", price: 550, rating: 4.7, image: "images/travel_products/60.png" }
+    ],
+    "SPORTS": [
+        { id: 61, name: "Tarmak Basketball", price: 499, rating: 4.5, image: "images/sports_products/61.jfif" },
+        { id: 62, name: "Soccer Ball", price: 399, rating: 4.4, image: "images/sports_products/62.jfif" },
+        { id: 63, name: "Volleyball", price: 349, rating: 4.3, image: "images/sports_products/63.jfif" },
+        { id: 64, name: "Wooden Baseball Bat", price: 1299, rating: 4.6, image: "images/sports_products/64.jfif" },
+        { id: 65, name: "Baseball Glove", price: 799, rating: 4.4, image: "images/sports_products/65.jpg" },
+        { id: 66, name: "Softball Bat", price: 899, rating: 4.5, image: "images/sports_products/66.jpg" },
+        { id: 67, name: "Softball Glove", price: 699, rating: 4.4, image: "images/sports_products/67.jpg" },
+        { id: 68, name: "Tennis Racquet", price: 1999, rating: 4.7, image: "images/sports_products/68.webp" },
+        { id: 69, name: "Tennis Balls", price: 249, rating: 4.3, image: "images/sports_products/69.jpg" },
+        { id: 70, name: "Badminton Shuttlecocks", price: 199, rating: 4.3, image: "images/sports_products/70.jfif" },
+        { id: 71, name: "Golf Clubs (Set)", price: 19999, rating: 4.8, image: "images/sports_products/71.webp" },
+        { id: 72, name: "Golf Balls (12-Pack)", price: 999, rating: 4.6, image: "images/sports_products/72.jpg" },
+        { id: 73, name: "Golf Gloves", price: 299, rating: 4.4, image: "images/sports_products/73.webp" },
+        { id: 74, name: "Roller Skates", price: 1499, rating: 4.4, image: "images/sports_products/74.jpg" },
+        { id: 75, name: "Skateboard", price: 1999, rating: 4.5, image: "images/sports_products/75.png" }
+    ]
+};
+
+// Add this line IMMEDIATELY AFTER the products object
+products["ALL PRODUCTS"] = [
+    ...products.MEN,
+    ...products.WOMEN,
+    ...products["KIDS & BABIES"],
+    ...products.TRAVEL,
+    ...products.SPORTS
+];
+
+        // Function to create category navigation
+        // Replace the original createCategoryNav function with this
+function createCategoryNav() {
+    const categoryNav = document.getElementById('categoryNav');
+    const categoriesOrder = ["ALL PRODUCTS", "MEN", "WOMEN", "KIDS & BABIES", "TRAVEL", "SPORTS"];
+    
+    categoriesOrder.forEach(category => {
+        const button = document.createElement('button');
+        button.textContent = category;
+        button.dataset.category = category;
+        
+        if (category === "ALL PRODUCTS") {
+            button.classList.add('active');
+        }
+        
+        button.addEventListener('click', () => {
+            document.querySelectorAll('#categoryNav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+            displayProducts(category);
+        });
+        
+        categoryNav.appendChild(button);
+    });
+}
+
+        // Function to display products for a selected category
+function displayProducts(category) {
+    const productGrid = document.getElementById('productGrid');
+    productGrid.innerHTML = ''; // Clear existing products
+    
+    const categoryProducts = products[category];
+    
+    categoryProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        
+        // Create product image
+        const img = document.createElement('img');
+        img.src = product.image;
+        img.alt = product.name;
+        img.className = 'product-image';
+        
+        // Create price and rating container
+        const priceRating = document.createElement('div');
+        priceRating.className = 'price-rating';
+        
+        // Create price element
+        // In the displayProducts function, REPLACE the original price code with:
+const price = document.createElement('div');
+price.className = 'product-price';
+price.textContent = `₱${product.price.toFixed(2)}`;
+        
+        // Check if product has original price (for BEST DEALS category)
+        if (product.originalPrice) {
+            price.innerHTML = `₱${product.price.toFixed(2)} <span style="text-decoration: line-through; color: #999; font-size: 14px;">₱${product.originalPrice.toFixed(2)}</span>`;
+        } else {
+            price.textContent = `₱${product.price.toFixed(2)}`;
+        }
+        
+        // Create rating element
+        const rating = document.createElement('div');
+        rating.className = 'product-rating';
+        rating.innerHTML = `★ ${product.rating.toFixed(1)}`;
+        
+        // Create product name element
+        const name = document.createElement('div');
+        name.className = 'product-name';
+        name.textContent = product.name;
+        
+        // Append all elements to product card
+        priceRating.appendChild(price);
+        priceRating.appendChild(rating);
+        productCard.appendChild(img);
+        productCard.appendChild(priceRating);
+        productCard.appendChild(name);
+        
+        // Add "Add to Cart" button
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add to Cart';
+        addButton.style.backgroundColor = '#003559';
+        addButton.style.color = 'white';
+        addButton.style.border = 'none';
+        addButton.style.padding = '8px 15px';
+        addButton.style.borderRadius = '4px';
+        addButton.style.marginTop = '10px';
+        addButton.style.cursor = 'pointer';
+        addButton.style.fontWeight = 'bold';
+        
+        // Add hover effect
+        addButton.onmouseover = function() {
+            this.style.backgroundColor = '#002540';
+        };
+        
+        addButton.onmouseout = function() {
+            this.style.backgroundColor = '#003559';
+        };
+        
+        // Add click event to add to cart
+        addButton.addEventListener('click', () => {
+            addToCart(product);
+        });
+        
+        productCard.appendChild(addButton);
+        
+        // Add click event for product details
+        productCard.addEventListener('click', (e) => {
+            // Only trigger if not clicking the add to cart button
+            if (e.target !== addButton) {
+                showProductDetails(product);
+            }
+        });
+        
+        productGrid.appendChild(productCard);
+    });
+}
+
+// Function to add product to cart
+function addToCart(product) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    const existingProduct = cartItems.find(item => item.id === product.id);
+
+    if (existingProduct) {
+        // Increment by the passed-in quantity (default to 1 if not present)
+        existingProduct.quantity += product.quantity || 1;
+    } else {
+        // Add new product with specified quantity (default to 1)
+        cartItems.push({
+            ...product,
+            quantity: product.quantity || 1
+        });
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    showAlert(`Added ${product.quantity || 1} x ${product.name} to cart!`);
+}
+
+
+// Function to show a temporary alert
+function showAlert(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.style.position = 'fixed';
+    alertDiv.style.top = '20px';
+    alertDiv.style.left = '50%';
+    alertDiv.style.transform = 'translateX(-50%)';
+    alertDiv.style.backgroundColor = '#003559';
+    alertDiv.style.color = 'white';
+    alertDiv.style.padding = '10px 20px';
+    alertDiv.style.borderRadius = '5px';
+    alertDiv.style.zIndex = '1000';
+    alertDiv.style.boxShadow = '0px 2px 10px rgba(0, 0, 0, 0.2)';
+    alertDiv.style.display = 'flex';
+    alertDiv.style.alignItems = 'center';
+    alertDiv.style.gap = '15px';
+
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = message;
+
+    const cartButton = document.createElement('button');
+    cartButton.textContent = 'Go to Cart';
+    cartButton.style.backgroundColor = 'white';
+    cartButton.style.color = '#003559';
+    cartButton.style.border = 'none';
+    cartButton.style.padding = '5px 10px';
+    cartButton.style.borderRadius = '4px';
+    cartButton.style.cursor = 'pointer';
+    cartButton.style.fontWeight = 'bold';
+
+    cartButton.onclick = () => {
+        window.location.href = 'cart.html';
+    };
+
+    alertDiv.appendChild(messageSpan);
+    alertDiv.appendChild(cartButton);
+    document.body.appendChild(alertDiv);
+
+    // Remove alert after 3 seconds if user doesn't click
+    setTimeout(() => {
+        alertDiv.style.opacity = '0';
+        alertDiv.style.transition = 'opacity 0.5s ease';
+
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                document.body.removeChild(alertDiv);
+            }
+        }, 500);
+    }, 3000);
+}
+
+
+// Function to show product details (to be implemented)
+function showProductDetails(product) {
+    const modalOverlay = document.createElement('div');
+    modalOverlay.className = 'modal-overlay';
+    modalOverlay.style.display = 'flex';
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    // Modal header
+    const modalHeader = document.createElement('div');
+    modalHeader.className = 'modal-header';
+
+    const backButton = document.createElement('button');
+    backButton.className = 'back-button';
+    backButton.innerHTML = '&larr;';
+    backButton.addEventListener('click', () => {
+        document.body.removeChild(modalOverlay);
+    });
+
+    const modalTitle = document.createElement('div');
+    modalTitle.className = 'modal-title';
+    modalTitle.textContent = product.name;
+
+    modalHeader.appendChild(backButton);
+    modalHeader.appendChild(modalTitle);
+
+    // Modal content
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modal-content';
+
+    // Product details container
+    const productDetailsContainer = document.createElement('div');
+    productDetailsContainer.style.display = 'flex';
+    productDetailsContainer.style.gap = '20px';
+    productDetailsContainer.style.marginBottom = '20px';
+
+    // Product image
+    const productImage = document.createElement('img');
+    productImage.src = product.image;
+    productImage.alt = product.name;
+    productImage.style.width = '200px';
+    productImage.style.height = '200px';
+    productImage.style.objectFit = 'contain';
+
+    // Product info
+    const productInfo = document.createElement('div');
+    productInfo.style.flex = '1';
+
+    // Price
+    const priceDisplay = document.createElement('div');
+    priceDisplay.style.fontSize = '24px';
+    priceDisplay.style.fontWeight = 'bold';
+    priceDisplay.style.marginBottom = '10px';
+
+    if (product.originalPrice) {
+        priceDisplay.innerHTML = `₱${product.price.toFixed(2)} <span style="text-decoration: line-through; color: #999; font-size: 18px;">₱${product.originalPrice.toFixed(2)}</span>`;
+    } else {
+        priceDisplay.textContent = `₱${product.price.toFixed(2)}`;
+    }
+
+    // Rating
+    const ratingDisplay = document.createElement('div');
+    ratingDisplay.innerHTML = `Rating: <span style="color: #FFD700; font-weight: bold;">★ ${product.rating.toFixed(1)}</span>`;
+    ratingDisplay.style.marginBottom = '15px';
+
+    // Description
+    const description = document.createElement('p');
+    description.textContent = `High-quality ${product.name.toLowerCase()} designed for optimal performance and durability. Perfect for athletes of all levels.`;
+    description.style.marginBottom = '20px';
+
+    // Quantity selector
+    let quantity = 1;
+    const quantityContainer = document.createElement('div');
+    quantityContainer.style.display = 'flex';
+    quantityContainer.style.alignItems = 'center';
+    quantityContainer.style.gap = '10px';
+    quantityContainer.style.marginBottom = '15px';
+
+    const decreaseBtn = document.createElement('button');
+    decreaseBtn.textContent = '−';
+    decreaseBtn.style.padding = '4px 10px';
+    decreaseBtn.style.fontSize = '16px';
+    decreaseBtn.style.cursor = 'pointer';
+    decreaseBtn.style.borderRadius = '4px';
+    decreaseBtn.style.border = '1px solid #003559';
+    decreaseBtn.style.backgroundColor = 'white';
+    decreaseBtn.style.color = '#003559';
+    decreaseBtn.addEventListener('click', () => {
+        if (quantity > 1) {
+            quantity--;
+            quantityDisplay.textContent = quantity;
+        }
+    });
+
+    const quantityDisplay = document.createElement('span');
+    quantityDisplay.textContent = quantity;
+    quantityDisplay.style.minWidth = '24px';
+    quantityDisplay.style.textAlign = 'center';
+    quantityDisplay.style.fontSize = '16px';
+    quantityDisplay.style.fontWeight = 'bold';
+
+    const increaseBtn = document.createElement('button');
+    increaseBtn.textContent = '+';
+    increaseBtn.style.padding = '4px 10px';
+    increaseBtn.style.fontSize = '16px';
+    increaseBtn.style.cursor = 'pointer';
+    increaseBtn.style.borderRadius = '4px';
+    increaseBtn.style.border = '1px solid #003559';
+    increaseBtn.style.backgroundColor = 'white';
+    increaseBtn.style.color = '#003559';
+    increaseBtn.addEventListener('click', () => {
+        quantity++;
+        quantityDisplay.textContent = quantity;
+    });
+
+    quantityContainer.appendChild(decreaseBtn);
+    quantityContainer.appendChild(quantityDisplay);
+    quantityContainer.appendChild(increaseBtn);
+
+    // Add to cart button
+    const addToCartBtn = document.createElement('button');
+    addToCartBtn.textContent = 'Add to Cart';
+    addToCartBtn.style.backgroundColor = '#003559';
+    addToCartBtn.style.color = 'white';
+    addToCartBtn.style.border = 'none';
+    addToCartBtn.style.padding = '10px 20px';
+    addToCartBtn.style.borderRadius = '4px';
+    addToCartBtn.style.cursor = 'pointer';
+    addToCartBtn.style.fontWeight = 'bold';
+    addToCartBtn.style.fontSize = '16px';
+    addToCartBtn.addEventListener('click', () => {
+        addToCart({ ...product, quantity });
+    });
+
+    // Assemble product info section
+    productInfo.appendChild(priceDisplay);
+    productInfo.appendChild(ratingDisplay);
+    productInfo.appendChild(description);
+    productInfo.appendChild(quantityContainer);
+    productInfo.appendChild(addToCartBtn);
+
+    // Final assembly
+    productDetailsContainer.appendChild(productImage);
+    productDetailsContainer.appendChild(productInfo);
+
+    const additionalInfo = document.createElement('div'); // Placeholder for more info
+
+    modalContent.appendChild(productDetailsContainer);
+    modalContent.appendChild(additionalInfo);
+
+    modal.appendChild(modalHeader);
+    modal.appendChild(modalContent);
+    modalOverlay.appendChild(modal);
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            document.body.removeChild(modalOverlay);
+        }
+    });
+
+    document.body.appendChild(modalOverlay);
+}
+
+// Function to set up modal functionality
+function setupModals() {
+    // Terms modal
+    document.getElementById('terms-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('terms-modal').style.display = 'flex';
+    });
+    
+    // Return policy modal
+    document.getElementById('return-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('return-modal').style.display = 'flex';
+    });
+    
+    // FAQ modal
+    document.getElementById('faq-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('faq-modal').style.display = 'flex';
+    });
+    
+    // Setup close buttons for all modals
+    const backButtons = document.querySelectorAll('.back-button');
+    backButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal-overlay').style.display = 'none';
+        });
+    });
+    
+    // Close modal when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Setup search functionality
+function setupSearch() {
+    const searchInput = document.querySelector('.search-input');
+    
+    searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            if (searchTerm.length === 0) return;
+            
+            // Collect all products into a single array for searching
+            let allProductsMap = new Map();
+Object.values(products).forEach(categoryProducts => {
+    categoryProducts.forEach(product => {
+        allProductsMap.set(product.id, product);
+    });
+});
+const allProducts = Array.from(allProductsMap.values());
+
+            // Filter products by search term
+            const filteredProducts = allProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            
+            // Display search results
+            displaySearchResults(filteredProducts, searchTerm);
+        }
+    });
+}
+
+// Display search results
+function displaySearchResults(results, searchTerm) {
+    // Remove active class from all category buttons
+    document.querySelectorAll('#categoryNav button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Clear product grid
+    const productGrid = document.getElementById('productGrid');
+    productGrid.innerHTML = '';
+    
+    // Show search results message
+    const resultsMessage = document.createElement('div');
+    resultsMessage.style.width = '100%';
+    resultsMessage.style.margin = '0 0 20px 0';
+    resultsMessage.style.padding = '10px 0';
+    resultsMessage.style.borderBottom = '1px solid #ccc';
+    resultsMessage.innerHTML = `<strong>Search results for "${searchTerm}":</strong> ${results.length} products found`;
+    
+    productGrid.appendChild(resultsMessage);
+    
+    // Display results or no results message
+    if (results.length > 0) {
+        results.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            // Create product image
+            const img = document.createElement('img');
+            img.src = product.image;
+            img.alt = product.name;
+            img.className = 'product-image';
+            
+            // Create price and rating container
+            const priceRating = document.createElement('div');
+            priceRating.className = 'price-rating';
+            
+            // Create price element
+            const price = document.createElement('div');
+            price.className = 'product-price';
+            
+            // Check if product has original price (for BEST DEALS category)
+            if (product.originalPrice) {
+                price.innerHTML = `₱${product.price.toFixed(2)} <span style="text-decoration: line-through; color: #999; font-size: 14px;">₱${product.originalPrice.toFixed(2)}</span>`;
+            } else {
+                price.textContent = `₱${product.price.toFixed(2)}`;
+            }
+            
+            // Create rating element
+            const rating = document.createElement('div');
+            rating.className = 'product-rating';
+            rating.innerHTML = `★ ${product.rating.toFixed(1)}`;
+            
+            // Create product name element
+            const name = document.createElement('div');
+            name.className = 'product-name';
+            name.textContent = product.name;
+            
+            // Append all elements to product card
+            priceRating.appendChild(price);
+            priceRating.appendChild(rating);
+            productCard.appendChild(img);
+            productCard.appendChild(priceRating);
+            productCard.appendChild(name);
+            
+            // Add "Add to Cart" button
+            const addButton = document.createElement('button');
+            addButton.textContent = 'Add to Cart';
+            addButton.style.backgroundColor = '#003559';
+            addButton.style.color = 'white';
+            addButton.style.border = 'none';
+            addButton.style.padding = '8px 15px';
+            addButton.style.borderRadius = '4px';
+            addButton.style.marginTop = '10px';
+            addButton.style.cursor = 'pointer';
+            addButton.style.fontWeight = 'bold';
+            
+            // Add hover effect
+            addButton.onmouseover = function() {
+                this.style.backgroundColor = '#002540';
+            };
+            
+            addButton.onmouseout = function() {
+                this.style.backgroundColor = '#003559';
+            };
+            
+            // Add click event to add to cart
+            addButton.addEventListener('click', () => {
+                addToCart(product);
+            });
+            
+            productCard.appendChild(addButton);
+            
+            // Add click event for product details
+            productCard.addEventListener('click', (e) => {
+                // Only trigger if not clicking the add to cart button
+                if (e.target !== addButton) {
+                    showProductDetails(product);
+                }
+            });
+            
+            productGrid.appendChild(productCard);
+        });
+    } else {
+        // Display no results message
+        const noResults = document.createElement('div');
+        noResults.style.width = '100%';
+        noResults.style.textAlign = 'center';
+        noResults.style.padding = '30px';
+        noResults.style.color = '#555';
+        noResults.innerHTML = `<h3>No products found matching "${searchTerm}"</h3>
+                             <p>Try a different search term or browse our categories.</p>`;
+        
+        productGrid.appendChild(noResults);
+    }
+}
+
+// Initialize the shop page
+function initShop() {
+    createCategoryNav();
+
+    const hash = decodeURIComponent(window.location.hash.substring(1));
+    const validCategories = ["MEN", "WOMEN", "KIDS & BABIES", "TRAVEL", "SPORTS"];
+
+    if (validCategories.includes(hash)) {
+        setTimeout(() => {
+            const categoryButton = [...document.querySelectorAll('#categoryNav button')]
+                .find(btn => btn.dataset.category === hash);
+
+            if (categoryButton) {
+                categoryButton.click();
+            } else {
+                displayProducts(hash);
+            }
+        }, 0);
+    } else {
+        displayProducts("ALL PRODUCTS");
+    }
+
+    setupModals();
+    setupSearch();
+    updateCartDisplay();
+}
+
+// Call init when DOM is loaded
+document.addEventListener('DOMContentLoaded', initShop);
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATHLOTECH - Profile</title>
+    <link rel="icon" type="image/png" href="images/others/transparent-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Urbanist", sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: #F0F4FF;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+            margin-right: 20px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+        
+        .nav a.active {
+            border-bottom: 2px solid white;
+        }
+        
+        .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            width: 220px;
+            background-color: #1c4d72;
+            color: white;
+        }
+        
+        .cart-button {
+            background-color: #000;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .cart-button a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex: 1 0 auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer {
+            background-color: #003559;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+            flex-shrink: 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-style: italic;
+            font-weight: bolder;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .copyright {
+            font-style: italic;
+        }
+
+        /* Profile page specific styles */
+        .profile-container {
+            width: 100%;
+            display: flex;
+            gap: 20px;
+        }
+
+        .user-info-container {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #003559;
+            border-radius: 10px;
+        }
+
+        .orders-container {
+            flex: 2;
+            padding: 20px;
+            border: 2px solid #003559;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #003559;
+        }
+
+        .user-info {
+            margin-bottom: 15px;
+        }
+
+        .user-info-label {
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 5px;
+        }
+
+        .user-info-value {
+            margin-bottom: 15px;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .profile-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .edit-profile-btn {
+            background-color: #003559;
+            color: white;
+            border: none;
+        }
+
+        .logout-btn {
+            background-color: black;
+            color: white;
+            border: none;
+        }
+
+        .orders-tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .order-tab {
+            padding: 10px 20px;
+            text-align: center;
+            cursor: pointer;
+            flex: 1;
+            border: 1px solid #e0e0e0;
+            background-color: #f9f9f9;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .order-tab.active {
+            background-color: #003559;
+            color: white;
+            font-weight: bold;
+        }
+
+        .order-tab-icon {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .orders-content {
+            display: none;
+        }
+
+        .orders-content.active {
+            display: block;
+        }
+
+        .product-item {
+            display: flex;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            margin-bottom: 15px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #003559;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .action-button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .review-form {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .rating-container {
+            margin-bottom: 10px;
+        }
+
+        .star-rating {
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .stars {
+            color: #ddd;
+        }
+
+        .stars .filled {
+            color: #f8ce0b;
+        }
+
+        .review-comment {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        .review-submit {
+            background-color: #003559;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal {
+            background-color: #b9d6f2;
+            border-radius: 10px;
+            border: solid #003559 2.5px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 20px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003559;
+            padding-bottom: 10px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .modal-content {
+            padding: 10px 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+            color: #003559;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .birthday-inputs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .birthday-inputs .form-select {
+            flex: 1;
+        }
+
+        .bio-input {
+            height: 100px;
+            resize: none;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .save-btn {
+            background-color: #000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    /* Add these adjustments */
+    .profile-container {
+        width: 100%;
+        gap: 25px;  /* Increased gap between sections */
+    }
+
+    .user-info-container,
+    .orders-container {
+        padding: 25px;  /* Slightly increased padding */
+        flex: 1;  /* Allow both containers to grow equally */
+        min-width: 150px;  /* Prevent containers from becoming too narrow */
+    }
+
+    /* Existing main-content rule - add width adjustment */
+    .main-content {
+        width: 95%;  /* Utilize more horizontal space */
+        max-width: 1200px;  /* Increased from 1200px */
+        padding: 30px 20px;  /* Adjusted vertical padding */
+    }
+
+    
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        
+        .modal {
+            background-color: #b9d6f2;
+            border-radius: 10px;
+            border: solid #003559 2.5px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 20px;
+            text-align: justify;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003559;
+            padding-bottom: 10px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003559;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .back-button {
+            background-color: #003559;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+        
+        .modal-content {
+            color: #003559;
+            line-height: 1.6;
+        }
+        
+        .modal-content h3 {
+            margin: 15px 0 10px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 15px;
+        }
+        
+        .modal-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+
+        /* FAQ specific styles */
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 53, 89, 0.3);
+            padding-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #003559;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 20px;
+        }
+        
+        .faq-question.active:after {
+            content: '-';
+        }
+        
+        .faq-answer {
+            padding: 10px 0;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .profile-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-image {
+                width: 100%;
+                height: auto;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+
+  .logo {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .user-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .search-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: 90%;
+  }
+
+  .cart-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .user-icon {
+    align-self: center;
+  }
+
+  .main-content {
+    flex-direction: column;
+    width: 95%;
+    padding: 15px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .user-info-container,
+  .orders-container {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .orders-tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .order-tab {
+    font-size: 16px;
+  }
+
+  .product-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .review-comment {
+    width: 100%;
+  }
+
+  .review-submit {
+    width: 100%;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-content,
+  .form-label,
+  .form-input,
+  .form-select {
+    font-size: 14px;
+  }
+
+  .form-row {
+    flex-direction: column !important;
+  }
+
+  .birthday-inputs {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .user-info-label {
+    font-size: 14px;
+  }
+
+  .user-info-value {
+    font-size: 14px;
+  }
+
+  .profile-btn {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .order-tab {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .review-comment {
+    font-size: 14px;
+  }
+
+  .save-btn {
+    width: 100%;
+  }
+}
+/* Navigation link hover */
+.nav a:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.header, .footer {
+    background: linear-gradient(-45deg, #003559, #1c4d72, #003559, #1c4d72, #003559);
+    background-size: 400% 400%;
+    animation: moveBackground 4s ease infinite;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Hover effect for main containers */
+.user-info-container:hover,
+.orders-container:hover {
+    box-shadow: 0 0 10px rgba(0, 53, 89, 0.2);
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for tabs */
+.order-tab:hover {
+    background-color: #e0e0e0;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for product items */
+.product-item:hover {
+    background-color: #f0f8ff;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+.profile-btn:hover,
+.action-button:hover,
+.review-submit:hover,
+.save-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+
+    </style>
+
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <svg class="logo-icon" viewBox="0 0 50 50">
+                    <image href="images/others/transparent-logo.png" width="50" height="50"/>
+                </svg>
+            </a>
+            <span class="logo-text">ATHLOTECH</span>
+        </div>
+        
+        <nav class="nav">
+            <a href="index.html">HOME</a>
+            <a href="shop.html">SHOP</a>
+            <a href="about.html">ABOUT</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+        
+        <div class="user-controls">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search...">
+                <span class="search-icon"></span>
+            </div>
+            
+            <div class="cart-button">
+                <a href="cart.html">🛒 CART</a>
+            </div>
+            
+            <div class="user-icon">
+                <a href="profile.html">
+                    <svg class="logo-icon" viewBox="0 0 40 40">
+                        <image href="images/others/transparent-profile.png" width="40" height="40"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="profile-container">
+            <!-- User Information Section -->
+            <div class="user-info-container">
+                <h2 class="section-title">GENERAL INFORMATION</h2>
+                
+                <div class="user-profile-section">
+                    <div class="user-avatar">
+                        <svg viewBox="0 0 120 120" width="120" height="120">
+                            <circle cx="60" cy="60" r="50" stroke="#003559" stroke-width="2" fill="none" />
+                            <circle cx="60" cy="45" r="20" stroke="#003559" stroke-width="2" fill="none" />
+                            <path d="M30,100 Q60,70 90,100" stroke="#003559" stroke-width="2" fill="none" />
+                        </svg>
+                    </div>
+                    
+                    <div class="user-info">
+                        <div class="user-info-label">NAME</div>
+                        <div class="user-info-value" id="display-name">Default Name</div>
+                        
+                        <div class="user-info-label">BIO</div>
+                        <div class="user-info-value" id="display-bio">Default Bio</div>
+                        
+                        <div class="user-info-label">ADDRESS</div>
+                        <div class="user-info-value" id="display-address">Default Address</div>
+                        
+                        <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;">
+                        
+                        <div class="user-info-label">AGE</div>
+                        <div class="user-info-value" id="display-age">20</div>
+                        
+                        <div class="user-info-label">GENDER</div>
+                        <div class="user-info-value" id="display-gender">Male</div>
+                        
+                        <div class="user-info-label">BIRTHDAY</div>
+                        <div class="user-info-value" id="display-birthday">01/01/2005</div>
+                        
+                        <div class="user-info-label">PHONE</div>
+                        <div class="user-info-value" id="display-phone">*********98</div>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <button class="profile-btn edit-profile-btn" id="editProfileBtn">EDIT PROFILE</button>
+                        <button class="profile-btn logout-btn" id="logoutBtn">LOG OUT</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orders Section -->
+            <div class="orders-container">
+                <h2 class="section-title">MY ORDERS</h2>
+                
+                <div class="orders-tabs">
+                    <div class="order-tab" id="toReviewTab" data-tab="toReview">
+                        <span class="order-tab-icon">★</span>
+                        To Review
+                    </div>
+                    <div class="order-tab" id="completedTab" data-tab="completed">
+                        <span class="order-tab-icon">&#x2714;</span>
+                        Completed
+                    </div>
+                </div>
+                
+                <div class="orders-content" id="toReviewContent">
+                    <!-- To Review orders will be populated by JavaScript -->
+                </div>
+                
+                <div class="orders-content" id="completedContent">
+                    <!-- Completed orders will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" id="terms-link">Terms & Conditions</a>
+            <a href="#" id="return-link">Return Policy</a>
+            <a href="#" id="faq-link">Frequently Asked Questions (FAQs)</a>
+        </div>
+        
+        <div class="copyright">
+            © 2025 ATHLOTECH. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">EDIT PROFILE</div>
+            </div>
+            <div class="modal-content">
+                <form id="profileEditForm">
+                    <div class="form-group">
+                        <label class="form-label">NAME</label>
+                        <input type="text" class="form-input" id="editName">
+                    </div>
+                    
+                    <div class="form-row" style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">AGE</label>
+                            <select class="form-select" id="editAge">
+                                <!-- Will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">GENDER</label>
+                            <select class="form-select" id="editGender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">BIRTHDAY</label>
+                        <div class="birthday-inputs">
+                            <select class="form-select" id="editDay">
+                                <!-- Will be populated by JavaScript -->
+                            </select>
+                            
+                            <select class="form-select" id="editMonth">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            
+                            <select class="form-select" id="editYear">
+                                <!-- Will be populated by JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">BIO</label>
+                        <textarea class="form-input bio-input" id="editBio"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">PHONE</label>
+                        <input type="text" class="form-input" id="editPhone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">ADDRESS</label>
+                        <input type="text" class="form-input" id="editAddress">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="save-btn" id="saveProfileBtn">SAVE CHANGES</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal structures -->
+    <div class="modal-overlay" id="terms-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">TERMS & CONDITIONS</div>
+            </div>
+            <div class="modal-content">
+                <p>Welcome to Athlotech! These Terms and Conditions outline the rules and regulations for the use of our website and services. By accessing or using our site, you agree to comply with and be bound by the following terms. If you disagree with any part of these terms, please do not use our website.</p>
+                
+                <h3>Product Information</h3>
+                <p>We offer a wide range of sports gear, apparel, and equipment. All descriptions, images, and prices are subject to change without notice. We make every effort to ensure product accuracy, but we do not guarantee that all information is current or error-free.</p>
+                
+                <h3>Order Processing & Shipping</h3>
+                <p>We aim to process and ship orders promptly. Delivery times are estimates and may vary depending on your location and carrier delays. We are not responsible for late or lost shipments once handed over to the courier.</p>
+                
+                <h3>User Accounts</h3>
+                <p>When you create an account with us, you must provide accurate and complete information. You are responsible for maintaining the confidentiality of your account and password. You agree to accept responsibility for all activities that occur under your account.</p>
+                
+                <h3>Payment Terms</h3>
+                <p>All payments are processed securely. We accept major credit cards, digital wallets, and other payment methods as indicated at checkout. Prices are inclusive of applicable taxes unless stated otherwise.</p>
+                
+                <h3>Privacy Policy</h3>
+                <p>Your use of our website is also governed by our Privacy Policy, which outlines how we collect, use, and protect your personal information.</p>
+                
+                <h3>Limitation of Liability</h3>
+                <p>Athlotech shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use our services or for the cost of procurement of substitute goods and services.</p>
+                
+                <h3>Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on the website. Your continued use of the site after changes constitutes acceptance of the modified terms.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="return-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">RETURN POLICY</div>
+            </div>
+            <div class="modal-content">
+                <p>To be eligible for a return, your item must meet the following conditions:</p>
+                
+                <ul>
+                    <li>Returned within 3-5 days of delivery.</li>
+                    <li>Unused, unwashed, and in original condition—the item must be in the same state you received it in, with all tags and original packaging.</li>
+                    <li>Non-sale items only—items purchased on sale, clearance, or through special promotions are not eligible for return unless defective or damaged.</li>
+                </ul>
+                
+                <h3>Return Process</h3>
+                <p>To initiate a return, please contact our customer service team through the Contact Us page or by emailing returns@athlotech.com. You will receive instructions on how to package and ship your return.</p>
+                
+                <h3>Refund Processing</h3>
+                <p>Once your return is received and inspected, we will notify you of the approval or rejection of your refund. If approved, your refund will be processed and a credit will automatically be applied to your original method of payment within 5-7 business days.</p>
+                
+                <h3>Exchanges</h3>
+                <p>We do not process direct exchanges. If you wish to exchange an item, please return the original purchase for a refund and place a new order for your desired item.</p>
+                
+                <h3>Damaged or Defective Items</h3>
+                <p>If you receive a damaged or defective item, please contact us immediately with photos of the damage. We will work with you to resolve the issue promptly, either through replacement or refund.</p>
+                
+                <h3>Return Shipping Costs</h3>
+                <p>Customers are responsible for return shipping costs unless the item received was defective or the wrong item was shipped. In these cases, we will provide a prepaid shipping label.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="faq-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <button class="back-button">&larr;</button>
+                <div class="modal-title">FREQUENTLY ASKED QUESTIONS</div>
+            </div>
+            <div class="modal-content">
+                <div class="faq-item">
+                    <div class="faq-question">What types of sports equipment do you sell?</div>
+                    <div class="faq-answer">
+                        We offer a wide range of athletic gear and equipment including fitness equipment, team sports supplies, outdoor adventure gear, activewear, footwear, and accessories. Our inventory spans across popular sports like basketball, football, soccer, volleyball, tennis, running, yoga, and many more.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How can I track my order?</div>
+                    <div class="faq-answer">
+                        Once your order has shipped, you will receive an email with a tracking number and a link to track your package. You can also log in to your account on our website to view your order status.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you offer international shipping?</div>
+                    <div class="faq-answer">
+                        Yes, we ship to most countries worldwide. International shipping rates and delivery times vary depending on the destination. Please note that additional customs fees, taxes, and duties may apply for international orders, which are the responsibility of the customer.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What if I receive a damaged or defective item?</div>
+                    <div class="faq-answer">
+                        If you receive a damaged or defective item, please contact our customer service team within 48 hours of delivery. Include photos of the damage and your order number. We'll work with you to resolve the issue by providing a replacement or refund as appropriate.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long will it take to receive my order?</div>
+                    <div class="faq-answer">
+                        Domestic orders typically arrive within 3-5 business days. Express shipping options are available at checkout for faster delivery. International orders generally take 7-14 business days, depending on the destination country and customs processing times.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do you have physical stores?</div>
+                    <div class="faq-answer">
+                        Currently, we operate exclusively online. This allows us to offer competitive pricing and ship directly to customers nationwide and internationally.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are your products authentic/genuine?</div>
+                    <div class="faq-answer">
+                        Yes, we only sell 100% authentic products sourced directly from manufacturers or authorized distributors. We stand behind the authenticity and quality of every item we sell.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize profile page
+            initProfilePage();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Setup modals
+            setupModals();
+        });
+
+        // Initialize profile page
+        function initProfilePage() {
+            // Populate age dropdown
+            const ageSelect = document.getElementById('editAge');
+            for (let i = 13; i <= 100; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                ageSelect.appendChild(option);
+            }
+            
+            // Populate day dropdown
+            const daySelect = document.getElementById('editDay');
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i < 10 ? '0' + i : i;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+            
+            // Populate year dropdown
+            const yearSelect = document.getElementById('editYear');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear - 100; i <= currentYear - 13; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+            
+            // Load user information
+            loadUserInfo();
+            
+            // Load orders
+            loadOrders();
+            
+            // Show to review tab by default
+            showTab('toReview');
+        }
+
+        // Load user information from local storage
+        function loadUserInfo() {
+            const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {
+                name: 'Default Name',
+                bio: 'Default Bio',
+                address: 'Default Address',
+                age: 20,
+                gender: 'Male',
+                birthday: '01/01/2005',
+                phone: '*********98'
+            };
+            
+            // Display user information
+            document.getElementById('display-name').textContent = userInfo.name;
+            document.getElementById('display-bio').textContent = userInfo.bio;
+            document.getElementById('display-address').textContent = userInfo.address;
+            document.getElementById('display-age').textContent = userInfo.age;
+            document.getElementById('display-gender').textContent = userInfo.gender;
+            document.getElementById('display-birthday').textContent = userInfo.birthday;
+            document.getElementById('display-phone').textContent = userInfo.phone;
+            
+            // Populate edit form
+            document.getElementById('editName').value = userInfo.name;
+            document.getElementById('editBio').value = userInfo.bio;
+            document.getElementById('editAddress').value = userInfo.address;
+            document.getElementById('editPhone').value = userInfo.phone;
+            
+            // Set select values
+            document.getElementById('editAge').value = userInfo.age;
+            document.getElementById('editGender').value = userInfo.gender;
+            
+            // Set birthday values
+            const [day, month, year] = userInfo.birthday.split('/');
+            document.getElementById('editDay').value = day;
+            document.getElementById('editMonth').value = parseInt(month); // Remove leading zero
+            document.getElementById('editYear').value = year;
+        }
+
+        // Load orders from local storage
+        function loadOrders() {
+            // Get completed orders from localStorage or create empty array
+            const completedOrders = JSON.parse(localStorage.getItem('completedOrders')) || [];
+            
+            // Get orders waiting for review from localStorage or create empty array
+            const toReviewOrders = JSON.parse(localStorage.getItem('toReviewOrders')) || [];
+            
+            
+            // Display orders
+            displayToReviewOrders(toReviewOrders);
+            displayCompletedOrders(completedOrders);
+        }
+
+        // Display orders waiting for review
+        function displayToReviewOrders(orders) {
+      const toReviewContent = document.getElementById('toReviewContent');
+      toReviewContent.innerHTML = '';
+
+      if (orders.length === 0) {
+        toReviewContent.innerHTML = '<p style="text-align: center; padding: 20px;">No orders to review.</p>';
+        return;
+      }
+
+      orders.forEach(order => {
+        const orderElement = document.createElement('div');
+        orderElement.classList.add('product-item');
+        orderElement.dataset.id = order.id;
+
+        const imagePath = order.image || 'images/product-placeholder.jpg';
+
+        orderElement.innerHTML = `
+          <img src="${imagePath}" alt="${order.name}" class="product-image" style="width: 80px; height: 80px; object-fit: contain;">
+          <div class="product-details" style="flex: 1;">
+            <div class="product-name">${order.name}</div>
+            <div class="product-price">₱${order.price.toFixed(2)}</div>
+          </div>
+          <div class="review-form">
+            <div class="form-label">Your Rating:</div>
+            <div class="star-rating" data-id="${order.id}">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+            </div>
+            <div class="form-label">Your Review:</div>
+            <textarea class="review-comment" placeholder="Write your review here..."></textarea>
+            <button class="review-submit" data-id="${order.id}">Submit Review</button>
+          </div>
+        `;
+
+        toReviewContent.appendChild(orderElement);
+      });
+
+      // Star interaction
+      document.querySelectorAll('.star-rating').forEach(starContainer => {
+        const stars = starContainer.querySelectorAll('.star');
+        stars.forEach(star => {
+          star.addEventListener('click', () => {
+            const value = parseInt(star.dataset.value);
+            stars.forEach(s => {
+              const starVal = parseInt(s.dataset.value);
+              s.style.color = starVal <= value ? '#f8ce0b' : '#ddd';
+              s.classList.toggle('filled', starVal <= value);
+            });
+          });
+        });
+      });
+
+      // Submit review button
+      document.querySelectorAll('.review-submit').forEach(button => {
+        button.addEventListener('click', function () {
+          const id = this.dataset.id;
+          const parent = this.closest('.review-form');
+          const rating = parent.querySelectorAll('.star.filled').length;
+          const comment = parent.querySelector('.review-comment').value.trim();
+
+          if (rating === 0) {
+            alert('Please rate this product.');
+            return;
+          }
+
+          submitReview(id, rating, comment);
+        });
+      });
+    }
+
+
+        // Display to review tab content by default
+        document.getElementById('toReviewTab').click();
+        
+        // Setup buy again functionality
+        function displayCompletedOrders(orders) {
+            const completedContent = document.getElementById('completedContent');
+            completedContent.innerHTML = '';
+            
+            if (orders.length === 0) {
+                completedContent.innerHTML = '<p style="text-align: center; padding: 20px;">No completed orders.</p>';
+                return;
+            }
+            
+            orders.forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.classList.add('product-item');
+                orderElement.dataset.id = order.id;
+                
+                // Set default image path if not provided
+                const imagePath = order.image || 'images/product-placeholder.jpg';
+                
+                orderElement.innerHTML = `
+                    <img src="${imagePath}" alt="${order.name}" class="product-image">
+                    <div class="product-details">
+                        <div class="product-name">${order.name}</div>
+                        <div class="product-price">₱${order.price.toFixed(2)}</div>
+                    </div>
+                    <button class="action-button buy-again-btn" data-id="${order.id}" data-name="${order.name}" data-price="${order.price}" data-image="${imagePath}">BUY AGAIN</button>
+                `;
+                
+                completedContent.appendChild(orderElement);
+            });
+            
+            // Add event listeners for buy again buttons
+            document.querySelectorAll('.buy-again-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = parseFloat(this.dataset.price);
+                    const image = this.dataset.image;
+                    
+                    // Add to cart
+                    addToCart({
+                        id,
+                        name,
+                        price,
+                        image,
+                        quantity: 1
+                    });
+                    
+                    alert(`${name} has been added to your cart!`);
+                });
+            });
+        }
+        
+        // Add to cart function
+        function addToCart(product) {
+            // Get cart items from localStorage or create empty array
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            
+            // Check if product already exists in cart
+            const existingProductIndex = cartItems.findIndex(item => item.id === product.id);
+            
+            if (existingProductIndex !== -1) {
+                // Increment quantity if product already exists
+                cartItems[existingProductIndex].quantity += product.quantity;
+            } else {
+                // Add new product to cart
+                cartItems.push(product);
+            }
+            
+            // Save updated cart to localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        }
+        
+        // Submit review function
+        function submitReview(id, rating, comment) {
+            // Get to review orders from localStorage
+            const toReviewOrders = JSON.parse(localStorage.getItem('toReviewOrders')) || [];
+            
+            // Find order by id
+            const orderIndex = toReviewOrders.findIndex(order => order.id.toString() === id.toString());
+            
+            if (orderIndex !== -1) {
+                // Get order
+                const order = toReviewOrders[orderIndex];
+                
+                // Mark order as reviewed and save rating and comment
+                order.reviewed = true;
+                order.rating = rating;
+                order.comment = comment;
+                
+                // Remove order from to review orders
+                toReviewOrders.splice(orderIndex, 1);
+                
+                // Save updated to review orders to localStorage
+                localStorage.setItem('toReviewOrders', JSON.stringify(toReviewOrders));
+                
+                // Get completed orders from localStorage or create empty array
+                const completedOrders = JSON.parse(localStorage.getItem('completedOrders')) || [];
+                
+                // Add order to completed orders
+                completedOrders.push(order);
+                
+                // Save updated completed orders to localStorage
+                localStorage.setItem('completedOrders', JSON.stringify(completedOrders));
+                
+                // Reload orders
+                loadOrders();
+            }
+        }
+
+        // Function to show a specific tab
+        function showTab(tabId) {
+            // Hide all content
+            document.querySelectorAll('.orders-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabId + 'Content').classList.add('active');
+            
+            // Add active class to selected tab
+            document.getElementById(tabId + 'Tab').classList.add('active');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    showTab(tabId);
+                });
+            });
+            
+            // Edit profile button
+            document.getElementById('editProfileBtn').addEventListener('click', function() {
+                document.getElementById('editProfileModal').style.display = 'flex';
+            });
+            
+            // Save profile button
+            document.getElementById('saveProfileBtn').addEventListener('click', function() {
+                saveProfile();
+                document.getElementById('editProfileModal').style.display = 'none';
+            });
+            
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                window.location.href = 'login.html';
+            });
+            
+            // Setup footer modals
+            setupModals();
+        }
+
+        // Save profile function
+        function saveProfile() {
+            const name = document.getElementById('editName').value;
+            const bio = document.getElementById('editBio').value;
+            const address = document.getElementById('editAddress').value;
+            const age = document.getElementById('editAge').value;
+            const gender = document.getElementById('editGender').value;
+            const phone = document.getElementById('editPhone').value;
+            
+            // Get birthday values
+            const day = document.getElementById('editDay').value;
+            const month = document.getElementById('editMonth').value;
+            const year = document.getElementById('editYear').value;
+            
+            // Format birthday
+            const birthday = `${day}/${month < 10 ? '0' + month : month}/${year}`;
+            
+            // Create user info object
+            const userInfo = {
+                name,
+                bio,
+                address,
+                age,
+                gender,
+                birthday,
+                phone
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            
+            // Update display
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-bio').textContent = bio;
+            document.getElementById('display-address').textContent = address;
+            document.getElementById('display-age').textContent = age;
+            document.getElementById('display-gender').textContent = gender;
+            document.getElementById('display-birthday').textContent = birthday;
+            document.getElementById('display-phone').textContent = phone;
+        }
+
+        // Setup modals
+function setupModals() {
+    // Terms modal
+    document.getElementById('terms-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('terms-modal').style.display = 'flex';
+    });
+    
+    // Return policy modal
+    document.getElementById('return-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('return-modal').style.display = 'flex';
+    });
+    
+    // FAQ modal
+    document.getElementById('faq-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('faq-modal').style.display = 'flex';
+    });
+    
+    // Back buttons in modals
+    document.querySelectorAll('.back-button').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal-overlay').style.display = 'none';
+        });
+    });
+    
+    // FAQ questions toggle
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const answer = this.nextElementSibling;
+            answer.classList.toggle('show');
+        });
+    });
+    
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    });
+}
+    </script>
+</body>
+</html>
